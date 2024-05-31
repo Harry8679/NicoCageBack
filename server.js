@@ -16,6 +16,11 @@ mongoose.connect
 
 const PORT = process.env.PORT || 5001;
 
-app.listen(PORT, () => {
-    console.log(`Server is listening on ${PORT}`);
-});
+mongoose
+    .connect(process.env.MONGO_URI)
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log(`Server is listening on ${PORT}`);
+    })
+})
+.catch((err) => console.log(err));;
