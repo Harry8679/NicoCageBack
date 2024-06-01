@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const userSchema = mongoose.Schema({
     firstName: {
@@ -27,7 +28,7 @@ const userSchema = mongoose.Schema({
         type: String,
         required: [true, "Please add a photo"],
         default: "https://i.ibb.co/4pDNDk1/avatar.png",
-      },
+    },
     phone: {
     type: String,
     default: "+33",
@@ -55,6 +56,19 @@ const userSchema = mongoose.Schema({
     timestamps: true, 
     minimise: false
 });
+
+// Encrypt password before saving to DB
+userSchema.pre('save', async function (next) {
+    if (!this.isModified('password')) {
+        return next();
+    }
+
+    // Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(this.password, salt);
+    this.password = hashedPassword;
+    next();
+})
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;
