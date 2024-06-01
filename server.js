@@ -1,18 +1,23 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 dotenv.config();
 
 const app = express();
 
+// Middlewares
+app.use(express.json());
+app.use(express.urlencoded({ extends: false }));
+app.use(cookieParser());
+// app.use(bodyParser.json());
+app.use(cors());
+
 app.get('/', (req, res) => {
     res.send('Home Page');
 });
-
-mongoose.connect
 
 const PORT = process.env.PORT || 5001;
 
