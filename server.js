@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const userRoute = require('./routes/user.route');
+const errorHandler = require('./middlewares/error.middleware');
 dotenv.config();
 
 const app = express();
@@ -22,6 +23,9 @@ app.use('/api/v1/users', userRoute);
 app.get('/', (req, res) => {
     res.send('Home Page');
 });
+
+// Error Handler
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5001;
 
