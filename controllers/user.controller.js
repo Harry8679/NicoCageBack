@@ -20,7 +20,7 @@ const register = asyncHandler(async (req, res) => {
     // Check if user exists
     const userExists = await User.findOne({ email });
 
-    if (!userExists) {
+    if (userExists) {
         res.status(400);
         throw new Error('Cet email existe déjà');
     }
