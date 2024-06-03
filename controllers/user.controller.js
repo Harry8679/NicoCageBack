@@ -72,6 +72,11 @@ const login = asyncHandler(async (req, res) => {
     }
 
     const passwordIsCorrect = await bcrypt.compare(password, user.password);
+
+    if (!passwordIsCorrect) {
+        res.status(400);
+        throw new Error('Email ou mot de passe invalide');
+    }
 });
 
 module.exports = { register, login };
