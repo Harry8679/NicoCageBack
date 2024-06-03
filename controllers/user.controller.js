@@ -5,10 +5,10 @@ const { generateToken } = require('../utils');
 let parser = require('ua-parser-js');
 
 const register = asyncHandler(async (req, res) => {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password, phone } = req.body;
 
     // Validation
-    if (!firstName || !lastName || !email || !password) {
+    if (!firstName || !lastName || !email || !password || !phone) {
         res.status(400);
         throw new Error('Veuillez renseigner tous les champs');
     }
@@ -31,7 +31,7 @@ const register = asyncHandler(async (req, res) => {
     const userAgent = [ua.ua];
 
     // Create new user
-    const user = await User.create({ firstName, lastName, email, password, userAgent });
+    const user = await User.create({ firstName, lastName, email, password, phone, userAgent });
 
     // Generate Token
     const token = generateToken(user._id);
