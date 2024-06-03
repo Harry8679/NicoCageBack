@@ -56,7 +56,13 @@ const register = asyncHandler(async (req, res) => {
 });
 
 const login = asyncHandler(async (req, res) => {
-    res.send('Login')
+    const { email, password } = req.body;
+
+    // Validation
+    if (!email || !password) {
+        res.status(400);
+        throw new Error('Please add email and password');
+    }
 });
 
 module.exports = { register, login };
