@@ -70,6 +70,8 @@ const login = asyncHandler(async (req, res) => {
         res.status(404);
         throw new Error('User not found, please signup');
     }
+
+    const passwordIsCorrect = await bcrypt.compare(password, user.password);
 });
 
 module.exports = { register, login };
