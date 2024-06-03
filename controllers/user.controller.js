@@ -63,6 +63,13 @@ const login = asyncHandler(async (req, res) => {
         res.status(400);
         throw new Error('Please add email and password');
     }
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+        res.status(404);
+        throw new Error('User not found, please signup');
+    }
 });
 
 module.exports = { register, login };
