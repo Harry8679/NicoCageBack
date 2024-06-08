@@ -16,7 +16,7 @@ const protected = asyncHandler(async (req, res, next) => {
         const user = await User.findById(verified.id).select('-password');
         if (!user) {
             res.status(404);
-            throw new Error('Utilisateur non trouvé.')
+            throw new Error('Utilisateur non existant.')
         }
 
         if (user.role === 'suspended') {

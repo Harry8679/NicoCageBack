@@ -118,6 +118,15 @@ const logout = asyncHandler(async(req, res) => {
 
 /* -------------------- Profile -------------------- */
 const getUser = asyncHandler(async(req, res) => {
-    res.send('Get User');
+    const user = await User.findById(req.user._id);
+
+    if (user) {
+        const { _id, firstName, lastName, email, phone, bio, photo, role, isVerified } = user;
+
+        res.status(200).json({ _id, firstName, lastName, email, phone, bio, photo, role, isVerified });
+    } else {
+        res.status(404);
+        throw new Error('Utilisateur non existant.')
+    }
 });
 module.exports = { register, login, logout, getUser };
