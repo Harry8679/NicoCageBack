@@ -116,4 +116,8 @@ const logout = asyncHandler(async(req, res) => {
     return res.status(200).json({ message: 'Déconnexion réussie !' });
 });
 
-module.exports = { register, login, logout };
+/* -------------------- Profile -------------------- */
+const getUser = asyncHandler(async(req, res) => {
+    res.send('Get User');
+});
+module.exports = { register, login, logout, getUser };
