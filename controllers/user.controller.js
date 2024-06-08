@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs');
 const { generateToken } = require('../utils');
 let parser = require('ua-parser-js');
 
+
+/* -------------------- Register -------------------- */
 const register = asyncHandler(async (req, res) => {
     const { firstName, lastName, email, password, phone } = req.body;
 
@@ -55,6 +57,7 @@ const register = asyncHandler(async (req, res) => {
     }
 });
 
+/* -------------------- Login -------------------- */
 const login = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
@@ -94,11 +97,23 @@ const login = asyncHandler(async (req, res) => {
         });
     const { _id, firstName, lastName, email, phone, bio, photo, role, isVerified } = user;
 
-    res.status(201).json({ _id, firstName, lastName, email, phone, bio, photo, role, isVerified, token });
+    res.status(200).json({ _id, firstName, lastName, email, phone, bio, photo, role, isVerified, token });
     } else {
         res.status(500);
         throw new Error('Une erreur s\'est produite. Veuillez réessayer.');
     }
 });
 
-module.exports = { register, login };
+/* -------------------- Logout -------------------- */
+const logout = asyncHandler(async(req, res) => {
+    res.cookie('token', '', {
+        path: '/',
+        httpOnly: true,
+        expires: new Date(0),
+        sameSite: 'none',
+        secure: true,
+    });
+    return res.status(200).json({ message: 'Déconnexion réussie !' });
+});
+
+module.exports = { register, login, logout };
