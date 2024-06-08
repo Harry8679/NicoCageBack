@@ -129,4 +129,38 @@ const getUser = asyncHandler(async(req, res) => {
         throw new Error('Utilisateur non existant.')
     }
 });
-module.exports = { register, login, logout, getUser };
+
+/* -------------------- Update User -------------------- */
+const updateUser = asyncHandler(async(req, res) => {
+    const user = await User.findById(req.user._id);
+
+    if (user) {
+        const { firstName, lastName, email, phone, bio, photo, /* role, isVerified */ } = user;
+
+        user.firstName = req.body.firstName || firstName;
+        user.lastName = req.body.lastName || lastName;
+        user.email = req.body.email || email;
+        user.phone = req.body.phone || phone;
+        user.bio = req.body.bio || bio;
+        user.photo = req.body.photo || photo;
+
+        const updatedUser = await user.save();
+
+        res.status(200).json({ 
+            _id: updatedUser._id, 
+            firstName: updatedUser.firstName, 
+            lastName: updatedUser.lastName, 
+            email: updatedUser.email, 
+            phone: updatedUser.phone, 
+            bio: updatedUser.bio, 
+            photo: updatedUser.photo, 
+            // role: updatedUser.role, 
+            // isVerified: updatedUser.isVerified 
+        });
+    } else {
+        res.status(404);
+        throw new Error('Utilisateur non existant.')
+    }
+});
+
+module.exports = { register, login, logout, getUser, updateUser };
