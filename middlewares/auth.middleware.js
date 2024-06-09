@@ -32,12 +32,13 @@ const protected = asyncHandler(async (req, res, next) => {
     }
 });
 
-const adminOnly = asyncHandler(async(req, res, next) => {
-    if (req.user && req.user.role === 'admin') {
+// Middleware pour vérifier si l'utilisateur est un admin
+const adminOnly = asyncHandler(async (req, res, next) => {
+    if (req.user && req.user.role === "admin") {
         next();
     } else {
         res.status(401);
-        throw new Error('Ne sont autorisés que les admins');
+        next(new Error('Seuls les admins sont autorisés'));
     }
 });
 
