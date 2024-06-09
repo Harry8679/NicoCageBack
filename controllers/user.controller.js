@@ -180,4 +180,15 @@ const deletedUser = asyncHandler(async(req, res) => {
     });
 });
 
-module.exports = { register, login, logout, getUser, updateUser, deletedUser };
+/* -------------------- Get All Users -------------------- */
+const getAllUsers = asyncHandler(async(req, res) => {
+    const users = await User.find().sort('-createdAt').select('-password');
+    if (!users) {
+        res.status(404);
+        throw new Error('Une erreur s\'est produite');
+    }
+
+    res.status(200).json(users);
+});
+
+module.exports = { register, login, logout, getUser, updateUser, deletedUser, getAllUsers };
