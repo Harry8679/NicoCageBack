@@ -191,4 +191,9 @@ const getAllUsers = asyncHandler(async(req, res) => {
     res.status(200).json(users);
 });
 
-module.exports = { register, login, logout, getUser, updateUser, deletedUser, getAllUsers };
+/* -------------------- Login Status -------------------- */
+const loginStatus = asyncHandler(async(req, res) => {
+    res.send('Login Status');
+});
+
+module.exports = { register, login, logout, getUser, updateUser, deletedUser, getAllUsers, loginStatus };
