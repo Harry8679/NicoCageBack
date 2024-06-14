@@ -3,6 +3,7 @@ const User = require('../models/user.model');
 const bcrypt = require('bcryptjs');
 const { generateToken } = require('../utils');
 let parser = require('ua-parser-js');
+const jwt = require('jsonwebtoken');
 
 
 /* -------------------- Register -------------------- */
